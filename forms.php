@@ -24,22 +24,25 @@
 <br>
 <br>
 <br>
-	<form action="https://web.ics.purdue.edu/~g1100782/Form_1.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Form 1" />
+	<form action="https://web.ics.purdue.edu/~g1100782/Admission_form.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Admission Form" />
 	</form>
 	<br>
-	<form action="https://web.ics.purdue.edu/~g1100782/Form_2.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Form 2" />
+	<form action="https://web.ics.purdue.edu/~g1100782/Lab_form.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Lab Form" />
 	</form>
 	<br>
-	<form action="https://web.ics.purdue.edu/~g1100782/Form_3.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Form 3" />
+	<form action="https://web.ics.purdue.edu/~g1100782/RegisterMedicine_form.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="RegisterMedicine_form" />
 	</form>
 	<br>
-	<form action="https://web.ics.purdue.edu/~g1100782/Form_4.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Form 4" />
+	<form action="https://web.ics.purdue.edu/~g1100782/Diagnosis_form.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Diagnosis Form" />
 	</form>
-	
+	<br>
+	<form action="https://web.ics.purdue.edu/~g1100782/Delivery_form.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Delivery Form" />
+	</form>
 <?php
 $servername = "mydb.ics.purdue.edu";
 $username = "g1100782";
