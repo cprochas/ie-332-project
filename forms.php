@@ -13,13 +13,49 @@
 
 
 <div id="main">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<center><font size="6"> Forms  </center>
+<br>
+<br>
+<br>
+<br>
+	<form action="https://web.ics.purdue.edu/~g1100782/Form_1.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Form 1" />
+	</form>
 	<br>
+	<form action="https://web.ics.purdue.edu/~g1100782/Form_2.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Form 2" />
+	</form>
 	<br>
+	<form action="https://web.ics.purdue.edu/~g1100782/Form_3.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Form 3" />
+	</form>
 	<br>
-	<br>
-	<br>
-	<br>
-	<center><font size="6"> Forms  </center>
+	<form action="https://web.ics.purdue.edu/~g1100782/Form_4.php?" style="text-align: center;">
+	<input type="submit" class="btn btn-primary" value="Form 4" />
+	</form>
+	
+<?php
+$servername = "mydb.ics.purdue.edu";
+$username = "g1100782";
+$password = "Team2Website";
+$dbname = "g1100782";
+
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+if (!$conn) {
+	die("Connection failed: " . mysqli_connect_error());
+}
+echo "Connected successfully";
+	
+
+?>
+		
+		
 	
 </div>
 </body>
