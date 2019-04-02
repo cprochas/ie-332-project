@@ -19,7 +19,12 @@
 	<br>
 	<center><font size="6"> Admission Form  </center>
 	<br>
-  <?php 
+		<?php
+		$name = $doa = $village = $parish = "";
+		$auth_name = $opd_ipd_no = "";
+		
+		
+
   
 	
 	
