@@ -131,12 +131,12 @@ function test_input($data) {
   <input type="radio" name="age" <?php if (isset($age) && $age=="10-19 yrs") echo "checked";?> value="10-19 yrs">10-19 yrs
   <input type="radio" name="age" <?php if (isset($age) && $age=="20-24 yrs") echo "checked";?> value="20-24 yrs">20-24 yrs
   <input type="radio" name="age" <?php if (isset($age) && $age==">=25 yrs") echo "checked";?> value=">=25 yrs">>=25 yrs
-  <span class="error">* <?php echo $genderErr;?></span>
+  <span class="error">* <?php echo $ageErr;?></span>
   <br><br>
   <input type="submit" name="submit" value="Submit">  
 </form>
 
-<?php
+/*<?php
 echo "<h2>Your Input:</h2>";
 echo $name;
 echo "<br>";
@@ -147,7 +147,7 @@ echo "<br>";
 echo $comment;
 echo "<br>";
 echo $gender;
-?>
+?>*/
 	
 </div>
 </body>
