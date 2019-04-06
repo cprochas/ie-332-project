@@ -25,24 +25,26 @@
 <br>
 <br>
 	<form action="https://web.ics.purdue.edu/~g1100782/Admission_form.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Admission Form" />
+	<input type="submit" class="btn btn-primary" value="Admission" />
 	</form>
 	<br>
 	<form action="https://web.ics.purdue.edu/~g1100782/Lab_form.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Lab Form" />
+	<input type="submit" class="btn btn-primary" value="Lab" />
 	</form>
 	<br>
 	<form action="https://web.ics.purdue.edu/~g1100782/RegisterMedicine_form.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="RegisterMedicine_form" />
+	<input type="submit" class="btn btn-primary" value="RegisterMedicine" />
 	</form>
 	<br>
 	<form action="https://web.ics.purdue.edu/~g1100782/Diagnosis_form.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Diagnosis Form" />
+	<input type="submit" class="btn btn-primary" value="Diagnosis" />
 	</form>
 	<br>
 	<form action="https://web.ics.purdue.edu/~g1100782/Delivery_form.php?" style="text-align: center;">
-	<input type="submit" class="btn btn-primary" value="Delivery Form" />
+	<input type="submit" class="btn btn-primary" value="Delivery" />
 	</form>
+</div>
+	
 <?php
 $servername = "mydb.ics.purdue.edu";
 $username = "g1100782";
@@ -54,8 +56,6 @@ if (!$conn) {
 	die("Connection failed: " . mysqli_connect_error());
 }
 echo "Connected successfully";
-	
-
 ?>
 	
 <?php
@@ -75,6 +75,6 @@ if ( $page=="Admission" || !isset($page) ) {
 		
 		
 	
-</div>
+
 </body>
 </html>
