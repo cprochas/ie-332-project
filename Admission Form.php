@@ -13,12 +13,12 @@
 <div id="main">
 	
 <?php
-$name = $doa = $village = $parish = "";
-$auth_name = $opd_ipd_no = ""; 
+$name = $id = $doa = $age = $village = $parish = $auth_name = $opd_ipd_no = ""; 
+$nameErr = $idErr = $doa = $ageErr = $villageErr = $parishErr = $auth_nameErr = $opd_ipd_noErr = "";
 		
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["name"])) {
-    $nameErr = "Name is required";
+    $nameErr = "Sorry, this answer is required. If not applicable please write N/A.";
   } else {
     $name = test_input($_POST["name"]);
     // check if name only contains letters and whitespace
@@ -27,36 +27,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
   
-  if (empty($_POST["email"])) {
-    $emailErr = "Email is required";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["village"])) {
+    $villageErr = "Sorry, this answer is required. If not applicable please write N/A.";
   } else {
-    $email = test_input($_POST["email"]);
-    // check if e-mail address is well-formed
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      $emailErr = "Invalid email format"; 
+    $village = test_input($_POST["village"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$village)) {
+      $villageErr = "Only letters and white space allowed"; 
     }
   }
     
-  if (empty($_POST["website"])) {
-    $website = "";
+	
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["parish"])) {
+    $parishErr = "Sorry, this answer is required. If not applicable please write N/A.";
   } else {
-    $website = test_input($_POST["website"]);
-    // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
-    if (!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) {
-      $websiteErr = "Invalid URL"; 
+    $parish = test_input($_POST["parish"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$parish)) {
+      $parishErr = "Only letters and white space allowed"; 
     }
   }
-
-  if (empty($_POST["comment"])) {
-    $comment = "";
+	
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["auth_name"])) {
+    $auth_nameErr = "Sorry, this answer is required. If not applicable please write N/A.";
   } else {
-    $comment = test_input($_POST["comment"]);
+    $auth_name = test_input($_POST["auth_name"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z ]*$/",$auth_name)) {
+      $auth_nameErr = "Only letters and white space allowed"; 
+    }
   }
-
-  if (empty($_POST["gender"])) {
-    $genderErr = "Gender is required";
+	
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["opd_ipd_no"])) {
+    $opd_ipd_noErr = "Sorry, this answer is required. If not applicable please write N/A.";
   } else {
-    $gender = test_input($_POST["gender"]);
+    $opd_ipd_no = test_input($_POST["opd_ipd_no"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z0-9 ]*$/",$opd_ipd_no)) {
+      $opd_ipd_noErr = "Invalid input."; 
+    }
+  }
+	
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["id"])) {
+    $idErr = "Sorry, this answer is required. If not applicable please write N/A.";
+  } else {
+    $id = test_input($_POST["id"]);
+    // check if name only contains letters and whitespace
+    if (!preg_match("/^[a-zA-Z0-9 ]*$/",$id)) {
+      $idErr = "Invalid input."; 
+    }
+  }
+	
+  if (empty($_POST["doa"])) {
+    $doaErr = "Sorry, this answer is required.";
+  } else {
+    $doa = test_input($_POST["doa"]);
+  }
+}
+
+  if (empty($_POST["age"])) {
+    $ageErr = "Sorry, this answer is required.";
+  } else {
+    $age = test_input($_POST["age"]);
   }
 }
 
@@ -71,21 +108,29 @@ function test_input($data) {
 <h2>Admission Form</h2>
 <p><span class="error">* required field</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">  
-  Name: <input type="text" name="name" value="<?php echo $name;?>">
+  Authority Name: <input type="text" name="auth_name" value="<?php echo $auth_name;?>">
+  <span class="error">* <?php echo $auth_nameErr;?></span>
+  <br><br>
+  Patient Name: <input type="text" name="name" value="<?php echo $name;?>">
   <span class="error">* <?php echo $nameErr;?></span>
   <br><br>
-  E-mail: <input type="text" name="email" value="<?php echo $email;?>">
-  <span class="error">* <?php echo $emailErr;?></span>
+  Patient ID: <input type="text" name="id" value="<?php echo $id;?>">
+  <span class="error">* <?php echo $idErr;?></span>
   <br><br>
-  Website: <input type="text" name="website" value="<?php echo $website;?>">
-  <span class="error"><?php echo $websiteErr;?></span>
+  OPD/IPD no.: <input type="text" name="opd_ipd_no" value="<?php echo $opd_ipd_no;?>">
+  <span class="error">* <?php echo $opd_ipd_noErr;?></span>
   <br><br>
-  Comment: <textarea name="comment" rows="5" cols="40"><?php echo $comment;?></textarea>
+  Village Name: <input type="text" name="village" value="<?php echo $village;?>">
+  <span class="error">* <?php echo $villageErr;?></span>
   <br><br>
-  Gender:
-  <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female") echo "checked";?> value="female">Female
-  <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male") echo "checked";?> value="male">Male
-  <input type="radio" name="gender" <?php if (isset($gender) && $gender=="other") echo "checked";?> value="other">Other  
+  Parish Name: <input type="text" name="parish" value="<?php echo $parish;?>">
+  <span class="error">* <?php echo $parishErr;?></span>
+  <br><br>
+  Today's Date: <input type="date" name="doa">* <br><br>
+  Age:
+  <input type="radio" name="age" <?php if (isset($age) && $age=="10-19 yrs") echo "checked";?> value="10-19 yrs">10-19 yrs
+  <input type="radio" name="age" <?php if (isset($age) && $age=="20-24 yrs") echo "checked";?> value="20-24 yrs">20-24 yrs
+  <input type="radio" name="age" <?php if (isset($age) && $age==">=25 yrs") echo "checked";?> value=">=25 yrs">>=25 yrs
   <span class="error">* <?php echo $genderErr;?></span>
   <br><br>
   <input type="submit" name="submit" value="Submit">  
