@@ -57,6 +57,21 @@ echo "Connected successfully";
 	
 
 ?>
+	
+<?php
+$page = $_GET["page"];
+if ( $page=="Admission" || !isset($page) ) {
+//echo home content
+} else if ( $page=="Lab" ) {
+//echo about me content
+} else if ( $page=="RegisterMedicine" ) {
+//echo portfolio content
+} else if ( $page=="Diagnosis" ) {
+//echo contact content
+} else if ( $page=="Delivery" ) {
+//echo contact content
+}
+?>
 		
 		
 	
