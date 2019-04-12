@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>Lab Form</title>
+<link href="style.css" rel="stylesheet:">
+</head>
+<body>
+<div class="maindiv">
+<div class="form_div">
+<div class="title">
+<h2>Lab Form</h2>
+</div>
+<form action="LabForm2.php" method="post">
+<span class="error"> * required field</span>
+<label>Today's Date</label>
+<input type="date" name="Date"> *
+<span class="error"> * <?php echo $date_error;?></span>
+
+<label>Patient ID</label>
+<input class="input" type="text" name="Patient_ID" value="">
+<span class="error"> * <?php echo $patient_id_error;?></span>
+
+<label>Hemoglobin (gm/dl)</label>
+<input class="input" type="text" name="Hemoglobin" value="">
+<span class="error"> * <?php echo $hemoglobin_error;?></span>
+
+<label>Blood-Grouping</label>
+<select name="Blood_Grouping" id="Blood_Grouping" >
+<option value="Anti_A">Anti A</option>
+<option value="B">B</option>
+<option value="D">D</option>
+<option value="AB">AB</option>
+<option value="Others">Others</option>
+<option value="N/A">N/A (test not yet completed)</option>
+</select> *
+<span class="error"> * <?php echo $blood_grouping_error;?></span>
+
+<label>Blood-Grouping Others</label>
+<input class="input" type="text" name="Blood_Grouping_Others">
+<span class="error"> * <?php echo $blood_grouping__others_error;?></span>
+
+<label>Lab Test</label>
+<select name="Lab_Test" id="Lab_Test" >
+<option value=""></option>
+<option value="Rhesus">Heamatology/Serology-Rhesus (D Grouping)</option>
+<option value="VDRL/RPR">Heamatology/Serology-VDRL/RPR</option>
+<option value="TPHA">Heamatology/Serology-TPHA</option>
+<option value="Malaria-Malaria">Malaria-Malaria Microscopy</option>
+<option value="Urine-Protein/Sugar">Urine Analysis-Protein/Sugar</option>
+<option value="Urine-Microscopy/Macroscopy">Urine Analysis-Microscopy/Macroscopy</option>
+<option value="Urine-Pregnancy">Urine Analysis-Pregnancy Test</option>
+<option value="Stool">Stool Analysis-Macroscopy/Microscopy</option>
+<option value="CSF">CSF-Protein/Sugar</option>
+</select> *
+<span class="error"> * <?php echo $lab_test_error;?></span>
+
+<label>Lab Test Results</label>
+<select name="Lab_Test_Results" id="Lab_Test_Results" >
+<option value=""></option>
+<option value="Positive">Positive</option>
+<option value="Negative">Negative</option>
+</select> *
+<span class="error"> * <?php echo $lab_test_results_error;?></span>
+
+<label>Syhpilis Test for Women</label>
+<select name="Syphilis_Test_W" id="Syphilis_Test_W" >
+<option value=""></option>
+<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
+<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
+<option value="NR">NR (Client tested and results given - client non-reactive)</option>
+<option value="NT">NT (Client not tested for Syphilis)</option>
+</select>
+<span class="error"> * <?php echo $syphilis_test_w_error;?></span>
+
+<label>Syhpilis Test for Partner</label>
+<select name="Syphilis_Test_P" id="Syphilis_Test_P" >
+<option value=""></option>
+<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
+<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
+<option value="NR">NR (Client tested and results given - client non-reactive)</option>
+<option value="NT">NT (Client not tested for Syphilis)</option>
+</select> 
+<span class="error"> * <?php echo $syphilis_test_p_error;?></span>
+
+<label>TB Status</label>
+<select name="TB_Status" id="TB_Status" >
+<option value=""></option>
+<option value="Rx">No signs (no signs or symptoms of TB)</option>
+<option value="+ve">Suspect (TB refer or sputum sent)</option>
+<option value="NR">TB Diagnosed (Diagnosed with TB)</option>
+<option value="NT">TB Rx (currently on TB treatment)</option>
+<option value="NT">N/A (TB test not yet completed)</option>
+</select>
+<span class="error"> * <?php echo $tb_status_error;?></span>
+
+<label>Authority Name</label>
+<input class="input type="text" name="Authority_Name">
+<span class="error"> * <?php echo $authority_name_error;?></span>
+
+<?php 
+$date_Error="";
+$patient_id_error="";
+$hemoglobin_error="";
+$blood_grouping_error="";
+$blood_grouping__others_error="";
+$lab_test_error="";
+$lab_test_results_error="";
+$syphilis_test_w_error="";
+$syphilis_test_p_error="";
+$tb_status_error="";
+$authority_name_error="";
+
+if(isset($_POST['submit'])){
+	if(empty($_POST["date"])){
+		$date_error = "Sorry, this answer is required.";
+	} else {
+		$date = test_input($_POST["date"]);
+}
+
+if(isset($_POST['submit'])){
+	if (empty($_POST["patient_id"])) {
+		$patient_id_error = "Sorry, this answer is required. If not applicable please write N/A.";
+	} else {
+		$patient_id = test_input($_POST["patient_id"]);
+	// check if name only contains letters and whitespace
+	if (!preg_match("/^[a-zA-Z ]*$/",$patient_id)) {
+		$patient_id_error = "Only letters and white space allowed"; 
+	}
+  }
+  
+if(isset($_POST['submit'])){
+	if (empty($_POST["hemoglobin"])) {
+		$hemoglobin_error = "Sorry, this answer is required. If not applicable please write N/A.";
+	} else {
+		$hemoglobin = test_input($_POST["name"]);
+	// check if name only contains letters and whitespace
+	if (!preg_match("/^[a-zA-Z ]*$/",$hemoglobin)) {
+		$hemoglobin_error = "Only letters and white space allowed"; 
+	}
+  }
+  
+  
+  
+  
+function test_input($data){
+	$data=trim($data);
+	$data=stripslashes($data);
+	$data=htmlspecialchars($data);
+	return $data;
+}
+
+
+
+
