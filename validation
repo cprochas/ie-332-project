@@ -1,0 +1,239 @@
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+		if (empty($_POST["Authority_Name"])) {
+
+			$Authority_NameErr = "Sorry, this answer is required. If not applicable please write N/A.";
+			echo $Authority_NameErr;
+
+		} else {
+
+			$Authority_Name = test_input($_POST["Authority_Name"]);
+		}
+
+    // check if name only contains letters and whitespace
+
+		if (!preg_match("/^[a-zA-Z ]*$/",$Authority_Name)) {
+
+			$Authority_NameErr = "Only letters and white space allowed"; 
+			echo $Authority_NameErr;
+
+		}
+
+	}
+	
+
+
+
+
+<?php
+
+$name = $id = $doa = $age = $village = $parish = $auth_name = $opd_ipd_no = ""; 
+
+$nameErr = $idErr = $doa = $ageErr = $villageErr = $parishErr = $auth_nameErr = $opd_ipd_noErr = "";
+
+		
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["name"])) {
+
+    $nameErr = "Sorry, this answer is required. If not applicable please write N/A.";
+
+  } else {
+
+    $name = test_input($_POST["name"]);
+
+    // check if name only contains letters and whitespace
+
+    if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+
+      $nameErr = "Only letters and white space allowed"; 
+
+    }
+
+  }
+
+  
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["village"])) {
+
+    $villageErr = "Sorry, this answer is required. If not applicable please write N/A.";
+
+  } else {
+
+    $village = test_input($_POST["village"]);
+
+    // check if name only contains letters and whitespace
+
+    if (!preg_match("/^[a-zA-Z ]*$/",$village)) {
+
+      $villageErr = "Only letters and white space allowed"; 
+
+    }
+
+  }
+
+    
+
+	
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["parish"])) {
+
+    $parishErr = "Sorry, this answer is required. If not applicable please write N/A.";
+
+  } else {
+
+    $parish = test_input($_POST["parish"]);
+
+    // check if name only contains letters and whitespace
+
+    if (!preg_match("/^[a-zA-Z ]*$/",$parish)) {
+
+      $parishErr = "Only letters and white space allowed"; 
+
+    }
+
+  }
+
+	
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["auth_name"])) {
+
+    $auth_nameErr = "Sorry, this answer is required. If not applicable please write N/A.";
+
+  } else {
+
+    $auth_name = test_input($_POST["auth_name"]);
+
+    // check if name only contains letters and whitespace
+
+    if (!preg_match("/^[a-zA-Z ]*$/",$auth_name)) {
+
+      $auth_nameErr = "Only letters and white space allowed"; 
+
+    }
+
+  }
+
+	
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["opd_ipd_no"])) {
+
+    $opd_ipd_noErr = "Sorry, this answer is required. If not applicable please write N/A.";
+
+  } else {
+
+    $opd_ipd_no = test_input($_POST["opd_ipd_no"]);
+
+    // check if name only contains letters and whitespace
+
+    if (!preg_match("/^[a-zA-Z0-9 ]*$/",$opd_ipd_no)) {
+
+      $opd_ipd_noErr = "Invalid input."; 
+
+    }
+
+  }
+
+	
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  if (empty($_POST["id"])) {
+
+    $idErr = "Sorry, this answer is required. If not applicable please write N/A.";
+
+  } else {
+
+    $id = test_input($_POST["id"]);
+
+    // check if name only contains letters and whitespace
+
+    if (!preg_match("/^[a-zA-Z0-9 ]*$/",$id)) {
+
+      $idErr = "Invalid input."; 
+
+    }
+
+  }
+
+	
+
+  if (empty($_POST["doa"])) {
+
+    $doaErr = "Sorry, this answer is required.";
+
+  } else {
+
+    $doa = test_input($_POST["doa"]);
+
+  }
+
+}
+
+
+
+  if (empty($_POST["age"])) {
+
+    $ageErr = "Sorry, this answer is required.";
+
+  } else {
+
+    $age = test_input($_POST["age"]);
+
+  }
+
+}
+
+
+
+function test_input($data) {
+
+  $data = trim($data);
+
+  $data = stripslashes($data);
+
+  $data = htmlspecialchars($data);
+
+  return $data;
+
+}
+
+
+// insert function
+// register patient if there are no errors in the form
+	if (count($errors) == 0) {
+		
+
+		/* if (isset($_POST['user_type'])) {
+			$user_type = e($_POST['user_type']);  */
+			$query = "INSERT INTO Patient_Register (first_name,last_name,DOB,inpatientstatus,
+			occupation,ward,streetaddress,village,provider,pregnant,admission_date,medication,allergies,
+			phone_number,sex,PatientEmail)VALUES('$first_name','$last_name','$DOB',
+			'$inpatientstatus','$occupation','$ward','$streetaddress','$village','$provider','$pregnant',
+			'$admission_date','$medication','$allergies','$phone_number','$sex','$PatientEmail')";
+			 mysqli_query($db, $query);
+			 $_SESSION['success']  = "New Patient successfully created!!";
+			  header('location: home.php');
+		/* else{
+			$query = "INSERT INTO users (username, email, user_type, password) 
+					  VALUES('$username', '$email', 'user', '$password')";
+			mysqli_query($db, $query);
+
+			// get id of the created patient
+			$logged_in_user_id = mysqli_insert_id($db);
+
+			$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
+			$_SESSION['success']  = "You are now logged in";
+			header('location: index.php');	 
+		} */
+	}
+}
