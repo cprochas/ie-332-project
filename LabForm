@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+
+   <head>
+
+      <title>Lab Form</title>
+
+     <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>	    
+
+</head>
+
+
+
+<body background= "giraffe.jpg";> <!-- style="background-color:lime;"> -->
+
+	
+	<div class="header">
+		<h2>Lab Form</h2>
+	</div>
+
+	<p><span class="error">* required field</span></p>
+	
+	<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+		<div class="input-group">
+			<label>Today's Date</label>
+			<input type="date" name="Date"> *
+		</div>
+		<div class="input-group">
+			<label>Patient ID</label>
+			<input type="text" name="Patient_ID"> *
+		</div>
+		<div class="input-group">
+			<label>Hemoglobin (gm/dl)</label>
+			<input type="text" name="Hemoglobin"> *
+		</div>
+		<div class="input-group">
+			<label>Blood-Grouping</label>
+			<select name="Blood_Grouping" id="Blood_Grouping" >
+				<option value=""></option>
+				<option value="Anti_A">Anti A</option>
+				<option value="B">B</option>
+				<option value="D">D</option>
+				<option value="AB">AB</option>
+				<option value="Others">Others</option>
+				<option value="N/A">N/A (test not yet completed)</option>
+			</select> *
+		</div>
+		<div class="input-group">
+			<label>Blood-Grouping Others</label>
+			<input type="text" name="Blood_Grouping_Others">*
+		</div>
+				<div class="input-group">
+			<label>Lab Test</label>
+			<select name="Lab_Test" id="Lab_Test" >
+				<option value=""></option>
+				<option value="Rhesus">Heamatology/Serology-Rhesus (D Grouping)</option>
+				<option value="VDRL/RPR">Heamatology/Serology-VDRL/RPR</option>
+				<option value="TPHA">Heamatology/Serology-TPHA</option>
+				<option value="Malaria-Malaria">Malaria-Malaria Microscopy</option>
+				<option value="Urine-Protein/Sugar">Urine Analysis-Protein/Sugar</option>
+				<option value="Urine-Microscopy/Macroscopy">Urine Analysis-Microscopy/Macroscopy</option>
+				<option value="Urine-Pregnancy">Urine Analysis-Pregnancy Test</option>
+				<option value="Stool">Stool Analysis-Macroscopy/Microscopy</option>
+				<option value="CSF">CSF-Protein/Sugar</option>
+			</select> *
+		</div>
+		<div class="input-group">
+			<label>Lab Test Results</label>
+			<select name="Lab_Test_Results" id="Lab_Test_Results" >
+				<option value=""></option>
+				<option value="Positive">Positive</option>
+				<option value="Negative">Negative</option>
+			</select> *
+		</div>
+		<div class="input-group">
+			<label>Syhpilis Test for Women</label>
+			<select name="Syphilis_Test_W" id="Syphilis_Test_W" >
+				<option value=""></option>
+				<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
+				<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
+				<option value="NR">NR (Client tested and results given - client non-reactive)</option>
+				<option value="NT">NT (Client not tested for Syphilis)</option>
+			</select> *
+		</div>
+		<div class="input-group">
+			<label>Syhpilis Test for Partner</label>
+			<select name="Syphilis_Test_P" id="Syphilis_Test_P" >
+				<option value=""></option>
+				<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
+				<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
+				<option value="NR">NR (Client tested and results given - client non-reactive)</option>
+				<option value="NT">NT (Client not tested for Syphilis)</option>
+			</select> *
+		</div>
+		<div class="input-group">
+			<label>TB Status</label>
+			<select name="TB_Status" id="TB_Status" >
+				<option value=""></option>
+				<option value="Rx">No signs (no signs or symptoms of TB)</option>
+				<option value="+ve">Suspect (TB refer or sputum sent)</option>
+				<option value="NR">TB Diagnosed (Diagnosed with TB)</option>
+				<option value="NT">TB Rx (currently on TB treatment)</option>
+				<option value="NT">N/A (TB test not yet completed)</option>
+			</select> *
+		</div>
+		<div class="input-group">
+			<label>Authority Name</label>
+			<input type="text" name="Authority_Name"> *
+		</div>
+		<div class="input-group">
+			<button type="submit" class="btn" name="LabForm_btn"> Submit </button>
+		</div>
+	</form>
+
+	<?php
+	function test_input($data) {
+		$data = trim($data);
+		$data = stripslashes($data);
+		$data = htmlspecialchars($data);
+		return $data;
+	}
+	
+	$Patient_ID = $Hemoglobin = $Blood_Grouping = $Blood_Grouping_Others = $Lab_Test = $Lab_Test_Results = $Syphilis_Test_W  = $Syphilis_Test_P = $TB_Status = $Authority_Name = $Date = ""; 
+
+	
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
+		$Patient_ID  	  =  test_input($_POST['Patient_ID']);
+		$Hemoglobin       =  test_input($_POST['Hemoglobin']);
+		$Blood_Grouping   =  test_input($_POST['Blood_Grouping']);
+		$Blood_Grouping_Others  =  test_input($_POST['Blood_Grouping_Others']);
+		$Lab_Test  		  =  test_input($_POST['Lab_Test']);
+		$Lab_Test_Results =  test_input($_POST['Lab_Test_Results']);
+		$Syphilis_Test_W  =  test_input($_POST['Syphilis_Test_W']);
+		$Syphilis_Test_P  =  test_input($_POST['Syphilis_Test_P']);
+		$TB_Status        =  test_input($_POST['TB_Status']);
+		$Authority_Name   =  test_input($_POST['Authority_Name']);
+		$Date  			  =  date("Y-m-d");
+	}
+	
+	?>
+
+	
+	
+</body>
+</html>
