@@ -1,0 +1,187 @@
+<?php 
+	function LabForm(){
+	// call these variables with the global keyword to make them available in function
+	global $db, $errors;
+
+	// receive all input values from the form. Call the e() function
+    // defined below to escape form values
+	$Patient_ID  	  =  e($_POST['Patient_ID']);
+	$Hemoglobin       =  e($_POST['Hemoglobin']);
+	$Blood_Grouping   =  e($_POST['Blood_Grouping']);
+	$Blood_Grouping_Others  =  e($_POST['Blood_Grouping_Others']);
+	$Lab_Test  		  =  e($_POST['Lab_Test']);
+	$Lab_Test_Results =  e($_POST['Lab_Test_Results']);
+	$Syphilis_Test_W  =  e($_POST['Syphilis_Test_W']);
+	$Syphilis_Test_P  =  e($_POST['Syphilis_Test_P']);
+	$TB_Status        =  e($_POST['TB_Status']);
+	$Authority_Name   =  e($_POST['Authority_Name']);
+	$Date  			  =  date("Y-m-d");
+	
+	// form validation: ensure that the form is correctly filled
+	if (empty($Patient_ID)) { 
+		array_push($errors, "Sorry, this answer is required. If not applicable please write N/A."); 
+	} 
+	if (empty($Hemoglobin)) { 
+		array_push($errors, "Sorry, this answer is required. If not applicable please write N/A."); 
+	}
+	if (empty($Blood_Grouping)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($Blood_Grouping_Others)) { 
+		array_push($errors, "Sorry, this answer is required. If not applicable please write N/A."); 
+	}
+	if (empty($Lab_Test)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($Lab_Test_Results)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($Syphilis_Test_W)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($Syphilis_Test_P)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($TB_Status)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($Authority_Name)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+	if (empty($Date)) { 
+		array_push($errors, "Sorry, this answer is required."); 
+	}
+
+	?>
+	
+	
+<?php 
+	
+session_start();
+
+// connect to database
+$servername = "mydb.ics.purdue.edu";
+$username1 = "g1100782";
+$password1 = "Team2Website";
+$dbname = "g1100782";
+$db = mysqli_connect($servername, $username1, $password1, $dbname);
+if (!$db) {
+	die("Connection failed: " . mysqli_connect_error());
+}
+
+
+// variable declaration
+$username = "";
+$email    = "";
+$errors   = array(); 
+// call the LabForm() function if LabForm_btn is clicked
+if (isset($_POST['LabForm_btn'])) {
+	LabForm();
+}
+
+
+// return user array from their id
+function getUserById($Patient_ID){
+	global $db;
+	$query = "SELECT * FROM Employee_Register WHERE id=" . $Patient_ID;
+	$result = mysqli_query($db, $query);
+
+	$user = mysqli_fetch_assoc($result);
+	return $user;
+}
+
+// escape string
+function e($val){
+	global $db;
+	return mysqli_real_escape_string($db, trim($val));
+}
+
+function display_error() {
+	global $errors;
+
+	if (count($errors) > 0){
+		echo '<div class="error">';
+			foreach ($errors as $error){
+				echo $error .'<br>';
+			}
+		echo '</div>';
+	}
+}	
+function isLoggedIn()
+{
+	if (isset($_SESSION['user'])) {
+		return true;
+	}else{
+		return false;
+	}
+}
+// log user out if logout button clicked
+if (isset($_GET['logout'])) {
+	session_destroy();
+	unset($_SESSION['user']);
+	header("location: login.php");
+}
+// call the login() function if register_btn is clicked
+if (isset($_POST['login_btn'])) {
+	login();
+}
+
+// LOGIN USER
+function login(){
+	global $db, $username, $errors;
+
+	// grap form values
+	$username = e($_POST['username']);
+	$password = e($_POST['password']);
+
+	// make sure form is filled properly
+	if (empty($username)) {
+		array_push($errors, "Username is required");
+	}
+	if (empty($password)) {
+		array_push($errors, "Password is required");
+	}
+
+	// attempt login if no errors on form
+	if (count($errors) == 0) {
+		$password = md5($password);
+
+		$query = "SELECT * FROM Employee_Register WHERE username='$username' AND password='$password' LIMIT 1";
+		$results = mysqli_query($db, $query);
+
+		if (mysqli_num_rows($results) == 1) { // user found
+			// check if user is admin or user
+			$logged_in_user = mysqli_fetch_assoc($results);
+			if ($logged_in_user['user_type'] == 'admin') {
+
+				$_SESSION['user'] = $logged_in_user;
+				$_SESSION['success']  = "You are now logged in";
+				header('location: admin/home.php');		  
+			}else{
+				$_SESSION['user'] = $logged_in_user;
+				$_SESSION['success']  = "You are now logged in";
+
+				header('location: index.php');
+			}
+		}else {
+			array_push($errors, "Wrong username/password combination");
+		}
+	}
+}
+function isAdmin()
+{
+	if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
+		return true;
+	}else{
+		return false;
+	}
+}
+
+
+
+
+	
+
+
+?>
+	
