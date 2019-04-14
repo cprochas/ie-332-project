@@ -150,4 +150,38 @@ function test_input($data){
 
 
 
+<?php
+$servername = "localhost";
+$username = "g1100782";
+$password = "Team2Website";
+$dbname = "g1100782";
 
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$patient_id = mysqli_real_escape_string($conn, $_REQUEST['patient_id']);
+$hemoglobin = mysqli_real_escape_string($conn, $_REQUEST['hemoglobin']);
+$blood_grouping = mysqli_real_escape_string($conn, $_REQUEST['blood_grouping']);
+$blood_grouping_others = mysqli_real_escape_string($conn, $_REQUEST['blood_grouping_others']);
+$lab_test = mysqli_real_escape_string($conn, $_REQUEST['lab_test']);
+$lab_test_results = mysqli_real_escape_string($conn, $_REQUEST['lab_test_results']);
+$syphilis_test_w = mysqli_real_escape_string($conn, $_REQUEST['syphilis_test_w']);
+$syphilis_test_p = mysqli_real_escape_string($conn, $_REQUEST['syphilis_test_p']);
+$tb_status = mysqli_real_escape_string($conn, $_REQUEST['tb_status']);
+$authority_name = mysqli_real_escape_string($conn, $_REQUEST['authority_name']);
+
+$sql = "INSERT INTO labForm (patient_id, hemoglobin, blood_grouping, blood_grouping_others, lab_test, lab_test_results, syphilis_test_w, syphilis_test_p, tb_status, authority_name)
+VALUES ('$patient_id', '$hemoglobin', '$blood_grouping', '$blood_grouping_others', '$lab_test', '$lab_test_results', '$syphilis_test_w', '$syphilis_test_p', '$tb_status', '$authority_name')";
+
+if (mysqli_query($conn, $sql)) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+}
+
+mysqli_close($conn);
+?>
