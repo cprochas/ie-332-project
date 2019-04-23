@@ -1,112 +1,8 @@
 <?php 
-	function LabForm(){
-	// call these variables with the global keyword to make them available in function
-	global $db, $errors;
+	session_start();
+	$errors = array();
 
-	// receive all input values from the form. Call the e() function
-    // defined below to escape form values
-	$Patient_ID  	  =  e($_POST['Patient_ID']);
-	$Hemoglobin       =  e($_POST['Hemoglobin']);
-	$Blood_Grouping   =  e($_POST['Blood_Grouping']);
-	$Blood_Grouping_Others  =  e($_POST['Blood_Grouping_Others']);
-	$Lab_Test  		  =  e($_POST['Lab_Test']);
-	$Lab_Test_Results =  e($_POST['Lab_Test_Results']);
-	$Syphilis_Test_W  =  e($_POST['Syphilis_Test_W']);
-	$Syphilis_Test_P  =  e($_POST['Syphilis_Test_P']);
-	$TB_Status        =  e($_POST['TB_Status']);
-	$Authority_Name   =  e($_POST['Authority_Name']);
-	$Date  			  =  date("Y-m-d");
-	
-	// form validation: ensure that the form is correctly filled
-	if (empty($Patient_ID)) { 
-		array_push($errors, "Sorry, this answer is required. If not applicable please write N/A."); 
-	} 
-	if (empty($Hemoglobin)) { 
-		array_push($errors, "Sorry, this answer is required. If not applicable please write N/A."); 
-	}
-	if (empty($Blood_Grouping)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($Blood_Grouping_Others)) { 
-		array_push($errors, "Sorry, this answer is required. If not applicable please write N/A."); 
-	}
-	if (empty($Lab_Test)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($Lab_Test_Results)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($Syphilis_Test_W)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($Syphilis_Test_P)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($TB_Status)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($Authority_Name)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-	if (empty($Date)) { 
-		array_push($errors, "Sorry, this answer is required."); 
-	}
-
-	?>
-	
-	
-<?php 
-	
-session_start();
-
-// connect to database
-$servername = "mydb.ics.purdue.edu";
-$username1 = "g1100782";
-$password1 = "Team2Website";
-$dbname = "g1100782";
-$db = mysqli_connect($servername, $username1, $password1, $dbname);
-if (!$db) {
-	die("Connection failed: " . mysqli_connect_error());
-}
-
-
-// variable declaration
-$username = "";
-$email    = "";
-$errors   = array(); 
-// call the LabForm() function if LabForm_btn is clicked
-if (isset($_POST['LabForm_btn'])) {
-	LabForm();
-}
-
-
-// return user array from their id
-function getUserById($Patient_ID){
-	global $db;
-	$query = "SELECT * FROM Employee_Register WHERE id=" . $Patient_ID;
-	$result = mysqli_query($db, $query);
-
-	$user = mysqli_fetch_assoc($result);
-	return $user;
-}
-
-// escape string
-function e($val){
-	global $db;
-	return mysqli_real_escape_string($db, trim($val));
-}
-
-function display_error() {
-	global $errors;
-
-	if (count($errors) > 0){
-		echo '<div class="error">';
-			foreach ($errors as $error){
-				echo $error .'<br>';
-			}
-		echo '</div>';
-	}
-}	
+// determines whether or not a user is logged into the system
 function isLoggedIn()
 {
 	if (isset($_SESSION['user'])) {
@@ -115,73 +11,132 @@ function isLoggedIn()
 		return false;
 	}
 }
-// log user out if logout button clicked
-if (isset($_GET['logout'])) {
-	session_destroy();
-	unset($_SESSION['user']);
-	header("location: login.php");
-}
-// call the login() function if register_btn is clicked
-if (isset($_POST['login_btn'])) {
-	login();
-}
+	
+	
+	function LabForm(){
 
-// LOGIN USER
-function login(){
-	global $db, $username, $errors;
+	// call these variables with the global keyword to make them available in function
+	global $conn, $errors;
+    // defined below to escape form values
+	$patient_id  	  =  ($_POST['patient_id']);
+	$hemoglobin       =  ($_POST['hemoglobin']);
+	$blood_grouping   =  ($_POST['blood_grouping']);
+	$blood_grouping_others  =  ($_POST['blood_grouping_others']);
+	$lab_test  		  =  ($_POST['lab_test']);
+	$lab_test_results =  ($_POST['lab_test_results']);
+	$syphilis_test_w  =  ($_POST['syphilis_test_w']);
+	$syphilis_test_p  =  ($_POST['syphilis_test_p']);
+	$tb_status        =  ($_POST['tb_status']);
+	$authority_name   =  ($_POST['authority_name']);
+	$date  			  =  ($_POST['date']);
 
-	// grap form values
-	$username = e($_POST['username']);
-	$password = e($_POST['password']);
-
-	// make sure form is filled properly
-	if (empty($username)) {
-		array_push($errors, "Username is required");
+	
+	// form validation: ensure that the form is correctly filled
+	if (empty($date)) { 
+		array_push($errors, "Sorry, Today's Date is required."); 
 	}
-	if (empty($password)) {
-		array_push($errors, "Password is required");
+	if (empty($patient_id)) { 
+		array_push($errors, "Sorry, Patient ID is required. If not applicable please write N/A."); 
+	} 
+	if (empty($hemoglobin)) { 
+		array_push($errors, "Sorry, Hemoglobin is required. If not applicable please write N/A."); 
+	}
+	if (empty($blood_grouping)) { 
+		array_push($errors, "Sorry, Blood-Grouping is required."); 
+	}
+	if (empty($blood_grouping_others)) { 
+		array_push($errors, "Sorry, Blood-Grouping Others is required. If not applicable please write N/A."); 
+	}
+	if (empty($lab_test)) { 
+		array_push($errors, "Sorry, Lab Test is required."); 
+	}
+	if (empty($lab_test_results)) { 
+		array_push($errors, "Sorry, Lab Test Results is required."); 
+	}
+	if (empty($syphilis_test_w)) { 
+		array_push($errors, "Sorry, Syphilis Test for Women is required."); 
+	}
+	if (empty($syphilis_test_p)) { 
+		array_push($errors, "Sorry, Syphilis Test for Partner is required."); 
+	}
+	if (empty($tb_status)) { 
+		array_push($errors, "Sorry, TB Status is required."); 
+	}
+	if (empty($authority_name)) { 
+		array_push($errors, "Sorry, Authority Name is required."); 
+	}
+	
+	
+
+
 	}
 
-	// attempt login if no errors on form
-	if (count($errors) == 0) {
-		$password = md5($password);
 
-		$query = "SELECT * FROM Employee_Register WHERE username='$username' AND password='$password' LIMIT 1";
-		$results = mysqli_query($db, $query);
 
-		if (mysqli_num_rows($results) == 1) { // user found
-			// check if user is admin or user
-			$logged_in_user = mysqli_fetch_assoc($results);
-			if ($logged_in_user['user_type'] == 'admin') {
+// call the LabForm() function if LabForm_btn is clicked
+if (isset($_POST['LabForm_btn'])) {
+	LabForm();
+}
 
-				$_SESSION['user'] = $logged_in_user;
-				$_SESSION['success']  = "You are now logged in";
-				header('location: admin/home.php');		  
-			}else{
-				$_SESSION['user'] = $logged_in_user;
-				$_SESSION['success']  = "You are now logged in";
 
-				header('location: index.php');
+function display_error() {
+	global $errors;
+
+	if (count($errors) != 0){
+		echo '<div class="error">';
+			foreach ($errors as $error){
+				echo $error .'<br>';
 			}
-		}else {
-			array_push($errors, "Wrong username/password combination");
-		}
+		echo '</div>';
 	}
-}
-function isAdmin()
-{
-	if (isset($_SESSION['user']) && $_SESSION['user']['user_type'] == 'admin' ) {
-		return true;
-	}else{
-		return false;
-	}
-}
+}	
 
+
+	
+	$servername = "mydb.ics.purdue.edu";
+	$username = "g1100782";
+	$password = "Team2Website";
+	$dbname = "g1100782";
+
+	// Create connection
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	// Check connection
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+
+	$date = mysqli_real_escape_string($conn, $_REQUEST['date']);
+	$patient_id = mysqli_real_escape_string($conn, $_REQUEST['patient_id']);
+	$hemoglobin = mysqli_real_escape_string($conn, $_REQUEST['hemoglobin']);
+	$blood_grouping = mysqli_real_escape_string($conn, $_REQUEST['blood_grouping']);
+	$blood_grouping_others = mysqli_real_escape_string($conn, $_REQUEST['blood_grouping_others']);
+	$lab_test = mysqli_real_escape_string($conn, $_REQUEST['lab_test']);
+	$lab_test_results = mysqli_real_escape_string($conn, $_REQUEST['lab_test_results']);
+	$syphilis_test_w = mysqli_real_escape_string($conn, $_REQUEST['syphilis_test_w']);
+	$syphilis_test_p = mysqli_real_escape_string($conn, $_REQUEST['syphilis_test_p']);
+	$tb_status = mysqli_real_escape_string($conn, $_REQUEST['tb_status']);
+	$authority_name = mysqli_real_escape_string($conn, $_REQUEST['authority_name']);
 
 
 
 	
-
-
+	if (isset($_POST['LabForm_btn'])) {
+	if (count($errors == 0)) {
+		$sql = "INSERT INTO labForm (patient_id, hemoglobin, blood_grouping, blood_grouping_others, lab_test, lab_test_results, 
+		syphilis_test_w, syphilis_test_p, tb_status, authority_name, date)
+		VALUES ('$patient_id', '$hemoglobin', '$blood_grouping', '$blood_grouping_others', '$lab_test', '$lab_test_results', 
+		'$syphilis_test_w', '$syphilis_test_p', '$tb_status', '$authority_name', '$date')";
+		
+		if (mysqli_query($conn, $sql)) {
+			echo "New record created successfully";
+		} else {
+			echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+		}
+	
+	}
+	}
+		mysqli_close($conn);
 ?>
+	
+	 
 	
