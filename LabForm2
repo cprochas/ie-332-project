@@ -1,187 +1,264 @@
-<html>
-<head>
-<title>Lab Form</title>
-<link href="style.css" rel="stylesheet:">
-</head>
-<body>
-<div class="maindiv">
-<div class="form_div">
-<div class="title">
-<h2>Lab Form</h2>
-</div>
-<form action="LabForm2.php" method="post">
-<span class="error"> * required field</span>
-<label>Today's Date</label>
-<input type="date" name="Date"> *
-<span class="error"> * <?php echo $date_error;?></span>
-
-<label>Patient ID</label>
-<input class="input" type="text" name="Patient_ID" value="">
-<span class="error"> * <?php echo $patient_id_error;?></span>
-
-<label>Hemoglobin (gm/dl)</label>
-<input class="input" type="text" name="Hemoglobin" value="">
-<span class="error"> * <?php echo $hemoglobin_error;?></span>
-
-<label>Blood-Grouping</label>
-<select name="Blood_Grouping" id="Blood_Grouping" >
-<option value="Anti_A">Anti A</option>
-<option value="B">B</option>
-<option value="D">D</option>
-<option value="AB">AB</option>
-<option value="Others">Others</option>
-<option value="N/A">N/A (test not yet completed)</option>
-</select> *
-<span class="error"> * <?php echo $blood_grouping_error;?></span>
-
-<label>Blood-Grouping Others</label>
-<input class="input" type="text" name="Blood_Grouping_Others">
-<span class="error"> * <?php echo $blood_grouping__others_error;?></span>
-
-<label>Lab Test</label>
-<select name="Lab_Test" id="Lab_Test" >
-<option value=""></option>
-<option value="Rhesus">Heamatology/Serology-Rhesus (D Grouping)</option>
-<option value="VDRL/RPR">Heamatology/Serology-VDRL/RPR</option>
-<option value="TPHA">Heamatology/Serology-TPHA</option>
-<option value="Malaria-Malaria">Malaria-Malaria Microscopy</option>
-<option value="Urine-Protein/Sugar">Urine Analysis-Protein/Sugar</option>
-<option value="Urine-Microscopy/Macroscopy">Urine Analysis-Microscopy/Macroscopy</option>
-<option value="Urine-Pregnancy">Urine Analysis-Pregnancy Test</option>
-<option value="Stool">Stool Analysis-Macroscopy/Microscopy</option>
-<option value="CSF">CSF-Protein/Sugar</option>
-</select> *
-<span class="error"> * <?php echo $lab_test_error;?></span>
-
-<label>Lab Test Results</label>
-<select name="Lab_Test_Results" id="Lab_Test_Results" >
-<option value=""></option>
-<option value="Positive">Positive</option>
-<option value="Negative">Negative</option>
-</select> *
-<span class="error"> * <?php echo $lab_test_results_error;?></span>
-
-<label>Syhpilis Test for Women</label>
-<select name="Syphilis_Test_W" id="Syphilis_Test_W" >
-<option value=""></option>
-<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
-<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
-<option value="NR">NR (Client tested and results given - client non-reactive)</option>
-<option value="NT">NT (Client not tested for Syphilis)</option>
-</select>
-<span class="error"> * <?php echo $syphilis_test_w_error;?></span>
-
-<label>Syhpilis Test for Partner</label>
-<select name="Syphilis_Test_P" id="Syphilis_Test_P" >
-<option value=""></option>
-<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
-<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
-<option value="NR">NR (Client tested and results given - client non-reactive)</option>
-<option value="NT">NT (Client not tested for Syphilis)</option>
-</select> 
-<span class="error"> * <?php echo $syphilis_test_p_error;?></span>
-
-<label>TB Status</label>
-<select name="TB_Status" id="TB_Status" >
-<option value=""></option>
-<option value="Rx">No signs (no signs or symptoms of TB)</option>
-<option value="+ve">Suspect (TB refer or sputum sent)</option>
-<option value="NR">TB Diagnosed (Diagnosed with TB)</option>
-<option value="NT">TB Rx (currently on TB treatment)</option>
-<option value="NT">N/A (TB test not yet completed)</option>
-</select>
-<span class="error"> * <?php echo $tb_status_error;?></span>
-
-<label>Authority Name</label>
-<input class="input type="text" name="Authority_Name">
-<span class="error"> * <?php echo $authority_name_error;?></span>
-
-<?php 
-$date_Error="";
-$patient_id_error="";
-$hemoglobin_error="";
-$blood_grouping_error="";
-$blood_grouping__others_error="";
-$lab_test_error="";
-$lab_test_results_error="";
-$syphilis_test_w_error="";
-$syphilis_test_p_error="";
-$tb_status_error="";
-$authority_name_error="";
-
-if(isset($_POST['submit'])){
-	if(empty($_POST["date"])){
-		$date_error = "Sorry, this answer is required.";
-	} else {
-		$date = test_input($_POST["date"]);
-}
-
-if(isset($_POST['submit'])){
-	if (empty($_POST["patient_id"])) {
-		$patient_id_error = "Sorry, this answer is required. If not applicable please write N/A.";
-	} else {
-		$patient_id = test_input($_POST["patient_id"]);
-	// check if name only contains letters and whitespace
-	if (!preg_match("/^[a-zA-Z ]*$/",$patient_id)) {
-		$patient_id_error = "Only letters and white space allowed"; 
-	}
-  }
-  
-if(isset($_POST['submit'])){
-	if (empty($_POST["hemoglobin"])) {
-		$hemoglobin_error = "Sorry, this answer is required. If not applicable please write N/A.";
-	} else {
-		$hemoglobin = test_input($_POST["name"]);
-	// check if name only contains letters and whitespace
-	if (!preg_match("/^[a-zA-Z ]*$/",$hemoglobin)) {
-		$hemoglobin_error = "Only letters and white space allowed"; 
-	}
-  }
-  
-  
-  
-  
-function test_input($data){
-	$data=trim($data);
-	$data=stripslashes($data);
-	$data=htmlspecialchars($data);
-	return $data;
-}
-
-
-
 <?php
-$servername = "localhost";
-$username = "g1100782";
-$password = "Team2Website";
-$dbname = "g1100782";
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+//Includes the functionsLab file
+include('functionsLab.php');
+
+//Redirected to Login page if not logged in
+if (!isLoggedIn()) {
+	$_SESSION['msg'] = "You must log in first";
+	header('location: multi_login/login.php');
 }
 
-$patient_id = mysqli_real_escape_string($conn, $_REQUEST['patient_id']);
-$hemoglobin = mysqli_real_escape_string($conn, $_REQUEST['hemoglobin']);
-$blood_grouping = mysqli_real_escape_string($conn, $_REQUEST['blood_grouping']);
-$blood_grouping_others = mysqli_real_escape_string($conn, $_REQUEST['blood_grouping_others']);
-$lab_test = mysqli_real_escape_string($conn, $_REQUEST['lab_test']);
-$lab_test_results = mysqli_real_escape_string($conn, $_REQUEST['lab_test_results']);
-$syphilis_test_w = mysqli_real_escape_string($conn, $_REQUEST['syphilis_test_w']);
-$syphilis_test_p = mysqli_real_escape_string($conn, $_REQUEST['syphilis_test_p']);
-$tb_status = mysqli_real_escape_string($conn, $_REQUEST['tb_status']);
-$authority_name = mysqli_real_escape_string($conn, $_REQUEST['authority_name']);
-
-$sql = "INSERT INTO labForm (patient_id, hemoglobin, blood_grouping, blood_grouping_others, lab_test, lab_test_results, syphilis_test_w, syphilis_test_p, tb_status, authority_name)
-VALUES ('$patient_id', '$hemoglobin', '$blood_grouping', '$blood_grouping_others', '$lab_test', '$lab_test_results', '$syphilis_test_w', '$syphilis_test_p', '$tb_status', '$authority_name')";
-
-if (mysqli_query($conn, $sql)) {
-    echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+// destroys session on logout and redirects to login page after inactivity 
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 503)) {
+    session_destroy();
+	unset($_SESSION['user']);
+	header("location: multi_login/login.php");
 }
 
-mysqli_close($conn);
+// updates last activity time-stamp
+$_SESSION['LAST_ACTIVITY'] = time(); 
 ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html oncontextmenu="return false"> <!-- Disables right click ability -->
+<head>
+    <title>Lab Form</title>
+	<link rel='icon' href='favicon.ico' type='image/x-icon'>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>	
+	
+<!-- css customization for body and SideBar -->
+<style>
+body {
+	font-size: 120%;
+	font-family: Arial;
+}
+form, .content {
+	width: 40%;
+	margin: 0px auto;
+	padding: 20px;
+	border: 1px solid #000000;
+	background: #A9A9A9;
+	border-radius: 0px 0px 10px 10px;
+}
+.input-group {
+	margin: 10px 0px 10px 0px;
+}
+.input-group label {
+	display: block;
+	text-align: left;
+	margin: 3px;
+	font-size: 16px
+}
+.input-group input {
+	height: 30px;
+	width: 93%;
+	padding: 5px 10px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+.input-box input {
+	height: 20px;
+	width: 93%;
+	padding: 5px 10px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+.input-group select {
+	height: 30px;
+	width: 93%;
+	padding: 5px 10px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+.input-group textarea {
+	width: 93%;
+	padding: 5px 10px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+}
+#user_type {
+	height: 40px;
+	width: 98%;
+	padding: 5px 10px;
+	background: white;
+	font-size: 16px;
+	border-radius: 5px; 
+	border: 1px solid gray;
+}
+.btn {
+	padding: 10px;
+	font-size: 15px;
+	color: white;
+	background: #2F4F4F;
+	border: none;
+	border-radius: 5px;
+}
+.btn:hover{
+	opacity: 0.8;
+}
+.error {
+	width: 92%; 
+	margin: 0px auto; 
+	padding: 10px; 
+	border: 1px solid #a94442; 
+	color: #a94442; 
+	background: #f2dede; 
+	border-radius: 5px; 
+	text-align: left;
+}
+</style>
+</head>
+<body background= "giraffe.jpg";> 
+	<div class="header">
+		<center><h2>Lab Form</h2></center>
+	</div>
+	<p><center> * required field</center></p>
+	<form method="post" action="LabForm2.php">
+	
+	<!-- Displays errors is any found during form verification -->
+	<?php echo display_error(); ?>
+	<div class="input-group">
+		<label>Today's Date</label>
+		<input type="date" name="date" required> *
+	</div
+	<div class="input-group">
+		<label>Patient ID</label>
+		<input type="text" name="patient_id" value="<?php echo $patient_id; ?>" required> *
+	</div>
+	<div class="input-group">
+		<label>Hemoglobin (gm/dl)</label>
+		<input type="text" name="hemoglobin" value="<?php echo $hemoglobin; ?>" required> *
+	</div>
+	<div class="input-group">
+		<label>Blood-Grouping</label>
+		<select name="blood_grouping" id="blood_grouping" required>
+			<option value=""></option>
+			<option value="Anti_A">Anti A</option>
+			<option value="B">B</option>
+			<option value="D">D</option>
+			<option value="AB">AB</option>
+			<option value="Others">Others</option>
+			<option value="N/A">N/A (test not yet completed)</option>
+		</select> *
+	</div>
+	<div class="input-group">
+		<label>Blood-Grouping Others</label>
+		<input type="text" name="blood_grouping_others" value="<?php echo $blood_grouping_others; ?>" required> *
+	</div>
+	<div class="input-group">
+		<label>Lab Test</label>
+		<select name="lab_test" id="lab_test" required>
+			<option value=""></option>
+			<option value="Heamatology/Serology-Rhesus (D Grouping)">Heamatology/Serology-Rhesus (D Grouping)</option>
+			<option value="Heamatology/Serology-VDRL/RPR">Heamatology/Serology-VDRL/RPR</option>
+			<option value="Heamatology/Serology-TPHA">Heamatology/Serology-TPHA</option>
+			<option value="Malaria-Malaria Microscopy">Malaria-Malaria Microscopy</option>
+			<option value="Urine Analysis-Protein/Sugar">Urine Analysis-Protein/Sugar</option>
+			<option value="Urine Analysis-Microscopy/Macroscopy">Urine Analysis-Microscopy/Macroscopy</option>
+			<option value="Urine Analysis-Pregnancy Test">Urine Analysis-Pregnancy Test</option>
+			<option value="Stool Analysis-Macroscopy/Microscopy">Stool Analysis-Macroscopy/Microscopy</option>
+			<option value="CSF-Protein/Sugar">CSF-Protein/Sugar</option>
+		</select> *
+	</div>
+	<div class="input-group">
+		<label>Lab Test Results</label>
+			<select name="lab_test_results" id="lab_test_results" required>
+				<option value=""></option>
+				<option value="Positive">Positive</option>
+				<option value="Negative">Negative</option>
+			</select> *
+	</div>
+	<div class="input-group">
+		<label>Syphilis Test for Women</label>
+		<select name="syphilis_test_w" id="syphilis_test_w" required>
+			<option value=""></option>
+			<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
+			<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
+			<option value="NR">NR (Client tested and results given - client non-reactive)</option>
+			<option value="NT">NT (Client not tested for Syphilis)</option>
+		</select> *
+	</div>
+	<div class="input-group">
+		<label>Syphilis Test for Partner</label>
+		<select name="syphilis_test_p" id="syphilis_test_p" required>
+			<option value=""></option>
+			<option value="Rx">Rx (Client tested and results given - client reactive and given treatment)</option>
+			<option value="+ve">+ve (Client tested positive but not yet given treatment)</option>
+			<option value="NR">NR (Client tested and results given - client non-reactive)</option>
+			<option value="NT">NT (Client not tested for Syphilis)</option>
+		</select> *
+	</div>
+	<div class="input-group">
+	<label>TB Status</label>
+		<select name="tb_status" id="tb_status" required>
+			<option value=""></option>
+			<option value="No Signs">No signs (no signs or symptoms of TB)</option>
+			<option value="Suspect">Suspect (TB refer or sputum sent)</option>
+			<option value="TB Diagnosed">TB Diagnosed (Diagnosed with TB)</option>
+			<option value="TB Rx">TB Rx (currently on TB treatment)</option>
+			<option value="N/A">N/A (TB test not yet completed)</option>
+		</select> *
+	<div class="input-group">
+		<label>Authority Name</label>
+		<input type="text" name="authority_name" value="<?php echo $authority_name;?>" required> *
+	</div>
+	<div class="input-group">
+			<button type="submit" class="btn" name="LabForm_btn"> Submit </button>
+	</div>
+</form>
+</body>
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- blocks access to source code -->
+<script language="JavaScript">
+    window.onload = function () {
+		document.addEventListener("contextmenu", function (e) {
+           e.preventDefault();
+}, false);
+        document.addEventListener("keydown", function (e) {
+				{
+				// "I" key
+				if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                   disabledEvent(e);
+				}
+				// "J" key
+				if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                   disabledEvent(e);
+				}
+				// "S" key + macOS
+				if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+                   disabledEvent(e);
+				}
+				// "U" key
+				if (e.ctrlKey && e.keyCode == 85) {
+                   disabledEvent(e);
+				}
+				// "F12" key
+				if (event.keyCode == 123) {
+					disabledEvent(e);
+				}
+				}, false);
+           function disabledEvent(e) {
+               if (e.stopPropagation) {
+                   e.stopPropagation();
+               } else if (window.event) {
+                   window.event.cancelBubble = true;
+               }
+               e.preventDefault();
+               return false;
+           }
+       }
+</script>
+</head>
+</html>
+
